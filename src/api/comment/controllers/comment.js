@@ -23,7 +23,7 @@ module.exports = createCoreController('api::comment.comment', (strapi) => ({
 
     create: async (ctx) => {
         await strapi.entityService.create('api::comment.comment', {
-            ...ctx.request.body
+            data: {...ctx.request.body}
         })
 
         ctx.response.status = 200;

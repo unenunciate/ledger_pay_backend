@@ -23,7 +23,7 @@ module.exports = createCoreController('api::post.post', (strapi) => ({
 
     create: async (ctx) => {
         await strapi.entityService.create('api::post.post', {
-            ...ctx.request.body
+            data: {...ctx.request.body}
         })
 
         ctx.response.status = 200;

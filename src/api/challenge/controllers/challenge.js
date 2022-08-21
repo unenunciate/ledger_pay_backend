@@ -23,7 +23,7 @@ module.exports = createCoreController('api::challenge.challenge', (strapi) => ({
 
     create: async (ctx) => {
         await strapi.entityService.create('api::challenge.challenge', {
-            ...ctx.request.body
+           data: { ...ctx.request.body }
         })
 
         ctx.response.status = 200;

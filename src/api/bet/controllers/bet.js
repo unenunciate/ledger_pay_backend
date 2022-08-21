@@ -23,7 +23,7 @@ module.exports = createCoreController('api::bet.bet', (strapi) => ({
 
     create: async (ctx) => {
         await strapi.entityService.create('api::bet.bet', {
-            ...ctx.request.body
+            data: {...ctx.request.body}
         })
 
         ctx.response.status = 200;
