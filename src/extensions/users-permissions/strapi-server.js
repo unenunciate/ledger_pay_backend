@@ -31,9 +31,8 @@ module.exports = (plugin) => {
             });
         }
 
-        ctx.response.body = {result};
-        ctx.response.status = 200;
-        return result;
+        ctx.response.body = JSON.stringify(result);
+        return { result };
     },
   
     plugin.routes['content-api'].routes.push({
