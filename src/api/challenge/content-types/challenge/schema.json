@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "challenges",
+  "info": {
+    "singularName": "challenge",
+    "pluralName": "challenges",
+    "displayName": "Challenge",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "challenges"
+    },
+    "posts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::post.post",
+      "mappedBy": "challenge"
+    },
+    "bets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::bet.bet",
+      "mappedBy": "challenge"
+    },
+    "Slug": {
+      "type": "uid"
+    },
+    "goalWeight": {
+      "type": "integer"
+    },
+    "startWeight": {
+      "type": "integer"
+    },
+    "deadline": {
+      "type": "date"
+    },
+    "currentWeight": {
+      "type": "integer"
+    },
+    "posted": {
+      "type": "date"
+    }
+  }
+}

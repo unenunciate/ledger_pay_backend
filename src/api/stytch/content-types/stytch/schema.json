@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "stytches",
+  "info": {
+    "singularName": "stytch",
+    "pluralName": "stytches",
+    "displayName": "Stytch",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "stytchId": {
+      "type": "biginteger"
+    },
+    "stytchAuthMethod": {
+      "type": "enumeration",
+      "enum": [
+        "Wallet",
+        "Email",
+        "SMS"
+      ]
+    },
+    "authIdentifier": {
+      "type": "string"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "stytches"
+    }
+  }
+}
