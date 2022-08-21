@@ -25,7 +25,7 @@ module.exports = (plugin) => {
         
         if(result.length < 1) {
             result = await strapi.entityService.create('api::stytch.stytch', {
-                fields: ['id', 'user', 'stytchAuthMethod', 'authIdentifier'],
+                fields: ['id', 'stytchAuthMethod', 'authIdentifier'],
                 data: { ...ctx.request.body },
             });
         }
