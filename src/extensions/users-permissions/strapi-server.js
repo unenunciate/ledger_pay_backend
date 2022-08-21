@@ -18,14 +18,14 @@ module.exports = (plugin) => {
     },
 
     plugin.controllers.user.findFromStytchId = async (ctx) => {
-        let result = await strapi.entityService.find('api::stytch.stytch', {
+        let result = await strapi.entityService.findMany('api::stytch.stytch', {
             filters: { stytchId: ctx.request.body.stytchId },
             populate: { user: true },
         });
         
         if(result.length < 1) {
             result = await strapi.entityService.create('api::stytch.stytch', {
-                fields: ['id'],
+                fields: ['id', 'user', 'stytchAuthMethod', 'authIdentifier'],
                 data: { ...ctx.request.body },
             });
         }

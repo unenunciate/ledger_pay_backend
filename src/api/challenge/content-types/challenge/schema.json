@@ -47,6 +47,12 @@
     },
     "posted": {
       "type": "date"
+    },
+    "conditionId": {
+      "type": "string"
+    },
+    "challengeId": {
+      "type": "string"
     }
   }
 }
