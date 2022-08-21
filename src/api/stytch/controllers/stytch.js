@@ -19,12 +19,12 @@ module.exports = createCoreController('api::stytch.stytch', (strapi) => ({
         if(result.length < 1) {
             result = await strapi.entityService.create('api::stytch.stytch', {
                 fields: ['id', 'stytchAuthMethod', 'authIdentifier'],
-                data: { stytchId: ctx.request.body.stytchId, stytchAuthMethod: ctx.request.body.stytchId, authIdentifier: ctx.request.body.authIdentifier },
+                data: { stytchId: ctx.request.body.stytchId, stytchAuthMethod: ctx.request.body.stytchAuthMethod, authIdentifier: ctx.request.body.authIdentifier },
             });
         }
 
         ctx.response.body = JSON.stringify(result);
-        
+
         return { result };
     },
   
