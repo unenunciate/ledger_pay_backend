@@ -23,7 +23,9 @@ module.exports = (plugin) => {
             filters: { stytchId: ctx.request.body.stytchId },
             populate: { user: true },
         });
-        console.log(JSON.stringify(ctx.request.body))
+
+        strapi.log.info(JSON.stringify(ctx.request.body));
+        
         if(result.length < 1) {
             result = await strapi.entityService.create('api::stytch.stytch', {
                 fields: ['id', 'stytchAuthMethod', 'authIdentifier'],
@@ -32,6 +34,7 @@ module.exports = (plugin) => {
         }
 
         ctx.response.body = JSON.stringify(result);
+        ctx.send();
         return { result };
     },
   
