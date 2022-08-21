@@ -1,5 +1,9 @@
-module.exports = {routes: [{
-    method: 'GET',
-    path: '/findFromStytchId',
-    handler: 'api::stytch.stytch.findFromStytchId',
-  }]}
+module.exports = {
+    routes: [
+        {
+            method: 'GET',
+            path: '/findFromStytchId',
+            handler: 'api::stytch.stytch.findFromStytchId',
+        },
+    ]
+}

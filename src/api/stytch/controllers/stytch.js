@@ -6,7 +6,7 @@
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::stytch.stytch', ({strapi}) => ({
+module.exports = createCoreController('api::stytch.stytch', (strapi) => ({
     findFromStytchId: async (ctx) => {
         let result = await strapi.entityService.findMany('api::stytch.stytch', {
             feilds: ['id', 'stytchAuthMethod', 'authIdentifier'],
@@ -24,7 +24,7 @@ module.exports = createCoreController('api::stytch.stytch', ({strapi}) => ({
         }
 
         ctx.response.body = JSON.stringify(result);
-        ctx.send();
+        
         return { result };
     },
   
