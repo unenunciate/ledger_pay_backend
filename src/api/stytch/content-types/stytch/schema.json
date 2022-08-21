@@ -12,9 +12,6 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "stytchId": {
-      "type": "biginteger"
-    },
     "stytchAuthMethod": {
       "type": "enumeration",
       "enum": [
@@ -31,6 +28,9 @@
       "relation": "manyToOne",
       "target": "plugin::users-permissions.user",
       "inversedBy": "stytches"
+    },
+    "stytchId": {
+      "type": "string"
     }
   }
 }
