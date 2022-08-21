@@ -1,12 +1,20 @@
 module.exports = [
-  'strapi::errors',
-  'strapi::security',
-  'strapi::cors',
-  'strapi::poweredBy',
-  'strapi::logger',
-  'strapi::query',
-  'strapi::body',
-  'strapi::session',
-  'strapi::favicon',
-  'strapi::public',
-];
+    {"name": 'strapi::errors'},
+    {"name": 'strapi::security'},
+    {
+      "name": 'strapi::cors',
+      "config": {
+        "origin": ['slimchance.bet', 'www.slimchance.bet', 'localhost'],
+        "methods": ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
+        "headers": ['Content-Type', 'Authorization', 'Origin', 'Accept'],
+        "keepHeaderOnError": true,
+      }
+    },
+    {"name": 'strapi::poweredBy'},
+    {"name": 'strapi::logger'},
+    {"name": 'strapi::query'},
+    {"name": 'strapi::body'},
+    {"name": 'strapi::session'},
+    {"name": 'strapi::favicon'},
+    {"name": 'strapi::public'},
+  ]
