@@ -1,18 +1,15 @@
 module.exports = (plugin) => {
 
     plugin.controllers.user.create = async (ctx) => {
-        const result = await strapi.entityService.create('plugin::users-permissions.user', {
-            fields: [
-                "id",
-                "username",
-                "slug"
-            ],
+        const id = await strapi.entityService.create('plugin::users-permissions.user', {
+            fields: ['id'],
             data: {
-                stytches: [ ctx.request.body.stytchStrapiId ],
                 ...ctx.request.body
             }
-        })
+        });
         
+        const result =  await strapi.entityService.findOne('plugin::users-permissions.user', id.id);
+
         ctx.response.status = 200;
         return result;
     }
