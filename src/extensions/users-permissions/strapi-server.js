@@ -8,7 +8,7 @@ module.exports = (plugin) => {
             }
         });
 
-        await strapi.entityService.update('plugin::users-permissions.user', id.id, {
+        await strapi.entityService.update('plugin::users-permissions.user', id, {
             data: {
                 stytches: ctx.request.body.stytches
             }
@@ -16,11 +16,11 @@ module.exports = (plugin) => {
 
         await strapi.entityService.update('api::stytch.stytch', ctx.request.body.stytches[0], {
             data: {
-                user: id.id
+                user: id
             }
         });
         
-        const result =  await strapi.entityService.findOne('plugin::users-permissions.user', id.id);
+        const result =  await strapi.entityService.findOne('plugin::users-permissions.user', id);
 
         ctx.response.status = 200;
         return result;
