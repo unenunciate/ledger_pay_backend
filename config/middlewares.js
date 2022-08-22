@@ -4,9 +4,10 @@ module.exports = [
     {
       "name": 'strapi::cors',
       "config": {
-        "origin": ['slimchance.bet', 'www.slimchance.bet', 'localhost'],
+        "enabled": true,
+        "origin": ["*"],
         "methods": ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'],
-        "headers": ['Content-Type', 'Authorization', 'Origin', 'Accept'],
+        "headers": "*",
         "keepHeaderOnError": true,
       }
     },
