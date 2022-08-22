@@ -8,6 +8,8 @@ module.exports = (plugin) => {
             }
         });
 
+        strapi.log.info(id);
+
         await strapi.entityService.update('plugin::users-permissions.user', id, {
             data: {
                 stytches: ctx.request.body.stytches
