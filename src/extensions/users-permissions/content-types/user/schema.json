@@ -63,7 +63,7 @@
       "inversedBy": "users",
       "configurable": false
     },
-    "stytchUser": {
+    "stytchUUID": {
       "type": "string",
       "required": true,
       "unique": true,
