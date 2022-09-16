@@ -1,7 +1,7 @@
 'use strict';
 
-const myController = require('./my-controller');
+const wyreController = require('./wyre-controller');
 
 module.exports = {
-  myController,
+  wyreController,
 };

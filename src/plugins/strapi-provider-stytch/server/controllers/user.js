@@ -9,9 +9,6 @@ const { sanitize } = require('@strapi/utils');
 
 /* eslint-disable no-useless-escape */
 const _ = require('lodash');
-const stytchService = require('../services/stytch-service');
-const emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
 
 module.exports = {
 
@@ -58,8 +55,5 @@ module.exports = {
 
         //TODO
     },
-
-
-
 
 };

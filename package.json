@@ -18,6 +18,7 @@
     "patch-package": "^6.4.7",
     "pg": "8.6.0",
     "postinstall-postinstall": "^2.1.0",
+    "request": "^2.88.2",
     "stytch": "^5.12.1"
   },
   "author": {
