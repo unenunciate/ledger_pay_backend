@@ -1,0 +1,15 @@
+{
+    "kind": "collectionType",
+    "collectionName": "payment_methods",
+    "info": {
+        "singularName": "payment_method",
+        "pluralName": "payment_methods",
+        "displayName": "Payment Method",
+        "description": ""
+    },
+    "options": {
+        "draftAndPublish": false,
+        "comment": ""
+    },
+    "attributes": {}
+}

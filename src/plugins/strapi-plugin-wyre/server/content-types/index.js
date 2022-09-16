@@ -1,3 +1,7 @@
 'use strict';
 
-module.exports = {};
+const wyreProfile = require("./wyre-profile")
+
+module.exports = {
+    "wyre-profile": wyreProfile,
+};

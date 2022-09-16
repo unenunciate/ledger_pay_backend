@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "wyre_profiles",
+  "info": {
+    "singularName": "wyre-profile",
+    "pluralName": "wyre-profiles",
+    "displayName": "Wyre profile",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "attributes": {
+    "status": {
+      "type": "string"
+    },
+    "partnerId": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "wallet_address": {
+      "type": "string",
+      "minLength": 40
+    },
+    "wyreUUID": {
+      "type": "uid"
+    },
+    "email": {
+      "type": "email"
+    },
+    "ssn": {
+      "type": "string"
+    }
+  }
+}
