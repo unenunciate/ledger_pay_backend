@@ -5,5 +5,5 @@ const paymentMethod = require("./payment-method")
 
 module.exports = {
     "wyre-profile": wyreProfile,
-    "payment_method": paymentMethod,
+    "payment-method": paymentMethod,
 };
