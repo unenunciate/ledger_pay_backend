@@ -1,0 +1,25 @@
+{
+  "name": "strapi-plugin-wyre",
+  "version": "0.0.0",
+  "description": "This is the description of the plugin.",
+  "strapi": {
+    "name": "strapi-plugin-wyre",
+    "description": "Description of Strapi Plugin Wyre plugin",
+    "kind": "plugin",
+    "displayName": "Strapi Plugin Wyre"
+  },
+  "dependencies": {},
+  "author": {
+    "name": "A Strapi developer"
+  },
+  "maintainers": [
+    {
+      "name": "A Strapi developer"
+    }
+  ],
+  "engines": {
+    "node": ">=14.19.1 <=16.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}
