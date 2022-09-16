@@ -24,7 +24,7 @@
       "type": "email",
       "minLength": 6,
       "configurable": false,
-      "required": false
+      "required": true
     },
     "provider": {
       "type": "string",
@@ -64,10 +64,9 @@
       "configurable": false
     },
     "stytchUUID": {
-      "type": "string",
+      "type": "uid",
       "required": true,
-      "unique": true,
-      "minLength": 6
+      "minLength": 3
     }
   }
 }
