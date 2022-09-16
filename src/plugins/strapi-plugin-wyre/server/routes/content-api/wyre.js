@@ -1,77 +1,45 @@
 module.exports = [
     {
         method: "POST",
-        path: "/create-user",
-        handler: "wyre.createUser",
+        path: "/create-wallet-reservation",
+        handler: "wyre.createWalletReservation",
         config: {
             middlewares: ['plugin::strapi-provider-stytch.isRegistered'],
             description:
-                "Create user in wyre",
+                "Create",
             tag: {
-                plugin: "strapi-provider-stytch",
-                name: "Register stytch user",
+                plugin: "strapi-plugin-wyre",
+                name: "Create wyre user",
                 actionType: "create",
             },
         },
     },
     {
         method: "POST",
-        path: "/send-magic-link",
-        handler: "auth.sendMagicLink",
+        path: "/create-order",
+        handler: "wyre.createOrder",
         config: {
             middlewares: ['plugin::strapi-provider-stytch.isRegistered'],
             description:
-                "Register/Login in Stytch with magin link",
+                "Create paymentorder",
             tag: {
-                plugin: "strapi-provider-stytch",
-                name: "Register stytch user",
+                plugin: "strapi-plugin-wyre",
+                name: "Create wyre payment order",
                 actionType: "create",
             },
         },
     },
     {
         method: "POST",
-        path: "/send-magic-link",
-        handler: "auth.sendMagicLink",
+        path: "/create-transfer",
+        handler: "wyre.createTransfer",
         config: {
             middlewares: ['plugin::strapi-provider-stytch.isRegistered'],
             description:
-                "Register/Login in Stytch with magin link",
+                "Create transfer to destination",
             tag: {
-                plugin: "strapi-provider-stytch",
-                name: "Register stytch user",
-                actionType: "create",
-            },
-        },
-    },
-    {
-        method: "POST",
-        path: "/send-magic-link",
-        handler: "auth.sendMagicLink",
-        config: {
-            auth: false,
-            policies: [],
-            description:
-                "Register/Login in Stytch with magin link",
-            tag: {
-                plugin: "strapi-provider-stytch",
-                name: "Register stytch user",
-                actionType: "create",
-            },
-        },
-    },
-    {
-        method: "POST",
-        path: "/send-magic-link",
-        handler: "auth.sendMagicLink",
-        config: {
-            auth: false,
-            policies: [],
-            description:
-                "Register/Login in Stytch with magin link",
-            tag: {
-                plugin: "strapi-provider-stytch",
-                name: "Register stytch user",
+                plugin: "strapi-plugin-wyre",
+                name: "Create transfer",
                 actionType: "create",
             },
         },
