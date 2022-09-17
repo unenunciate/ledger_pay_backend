@@ -7,13 +7,9 @@
  */
 
 const request = require('request');
+const { createPaymentOrder } = require('../controllers/wyre-controller');
 
-const _ = require("lodash");
-const crypto = require("crypto");
-const { sanitize } = require('@strapi/utils');
-const { copyFile } = require("fs");
-
-const getOtions = {
+const getOptions = {
   method: 'GET',
   url: 'https://api.testwyre.com/v3/debitcard/authorization/',
   headers: { accept: 'application/json' }
@@ -45,6 +41,74 @@ module.exports = (
 
       //Extract data, save reusable info in wyre-profile
 
+    },
+
+    async createPaymentOrder(paymentOrder, wyreProfile) {
+
+      const { reservation } = this.createPaymentReservation(paymentOrder);
+
+      const request = require('request');
+
+      const options = {
+        method: 'POST',
+        url: 'https://api.testwyre.com/v3/debitcard/process/partner',
+        headers: { accept: 'application/json', 'content-type': 'application/json' },
+        body: {
+          "debitCard": paymentOrder.debitcard,
+          reservationId: reservation,
+          trigger3ds: true,
+          amount: paymentOrder.amount,
+          sourceCurrency: paymentOrder.sourceCurrency,
+          destCurrency: paymentOrder.destCurrency,
+          dest: paymentOrder.dest,
+          referrerAccountId: 'AC_Y22RAQSKYV6',
+          givenName: wyreProfile.givenName,
+          familyName: wyreProfile.familyName,
+          email: wyreProfile.email,
+          ipAddress: '1.1.1.1',
+          phone: wyreProfile.phone,
+          address: {
+            street1: wyreProfile.street1,
+            city: wyreProfile.city,
+            state: wyreProfile.state,
+            postalCode: wyreProfile.postalCode,
+            country: wyreProfile.country,
+          }
+        },
+        json: true
+      };
+
+      request(options, function (error, response, body) {
+        if (error) throw new Error(error);
+
+        console.log(body);
+      });
+
+
+
+    },
+
+    async createPaymentReservation(paymentOrder) {
+      const options = {
+        method: 'POST',
+        url: 'https://api.testwyre.com/v3/orders/reserve',
+        headers: { accept: 'application/json', 'content-type': 'application/json' },
+        body: {
+          amountIncludeFees: true,
+          sourceAmount: paymentOrder.amount,
+          sourceCurrency: paymentOrder.sourceCurrency,
+          destCurrency: paymentOrder.destCurrency,
+          referrerAccountId: 'AC_YV8LCV3C9HZ',
+          dest: paymentOrder.dest,
+        },
+        json: true
+      };
+
+      request(options, function (error, response, body) {
+        if (error) throw new Error(error);
+
+        return body;
+      });
     },
 
     async createWalletOrderReservation(data) {

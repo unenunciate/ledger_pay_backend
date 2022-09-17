@@ -9,7 +9,6 @@ const { sanitize } = require('@strapi/utils');
 
 /* eslint-disable no-useless-escape */
 const _ = require('lodash');
-const { wyreService } = strapi.plugins['strapi-plugin-wyre'].services;
 const emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 
@@ -17,19 +16,20 @@ module.exports = {
 
 
   async createPaymentOrder(ctx) {
-    const { reservationData } = ctx.request.body;
-    const reservation = await wyreService.updateWyreProfile(reservationData);
+    const { wyreService } = strapi.plugins['strapi-plugin-wyre'].services;
 
+    const user = ctx.state.user;
+    const paymentOrder = ctx.request.body;
+    const wyreProfile = strapi.db.query("plugin::strapi-plugin-wyre.wyre-profile").findOne({
+      where: { user: user.id },
+      populate: true,
+    })
 
-    if (!reservation) {
-      ctx.badRequest('wyre.error');
-    }
+    const { transfer } = await wyreService.createPaymentOrder(paymentOrder, wyreProfile);
 
-    const paymentOrder = await wyreService.createPaymentOrder(reservation);
-
-    if (paymentOrder) {
+    if (transfer) {
       ctx.send({
-        paymentOrder
+        transfer,
       })
     }
     ctx.badRequest('wyre.error');
@@ -55,18 +55,31 @@ module.exports = {
 
   async createWyreProfile(ctx) {
 
+    strapi.log.debug('wyreController.createWyreProfile');
     const data = ctx.request.body;
-
-    //TODO: query to create... 
     const user = ctx.state.user;
-    const wyreProfile = await strapi.db.query("").create({
+
+    console.log(data)
+    console.log(user);
+    const wyreProfile = await strapi.db.query("plugin::strapi-plugin-wyre.wyre-profile").create({
       data: {
         ...data,
-        stytchUUID: user.user_id
+        user: { id: user.id }
       },
     })
 
+    console.log(wyreProfile);
+
+    const updatedUser = await strapi.db.query("plugin::users-permissions.user").update({
+      where: { stytchUUID: user.stytchUUID },
+      data: {
+        wyreProfile: { id: wyreProfile.id },
+        populate: ['*'],
+      }
+    })
+
     ctx.send({
+      updatedUser,
       wyreProfile
     })
 

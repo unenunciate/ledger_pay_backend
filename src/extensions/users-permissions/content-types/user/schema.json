@@ -20,27 +20,6 @@
       "configurable": false,
       "required": true
     },
-    "email": {
-      "type": "email",
-      "minLength": 6,
-      "configurable": false,
-      "required": true
-    },
-    "provider": {
-      "type": "string",
-      "configurable": false
-    },
-    "password": {
-      "type": "password",
-      "minLength": 6,
-      "configurable": false,
-      "private": true
-    },
-    "resetPasswordToken": {
-      "type": "string",
-      "configurable": false,
-      "private": true
-    },
     "confirmationToken": {
       "type": "string",
       "configurable": false,
@@ -67,6 +46,31 @@
       "type": "uid",
       "required": true,
       "minLength": 3
+    },
+    "email": {
+      "type": "email",
+      "minLength": 6,
+      "required": false
+    },
+    "addresses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::address.address",
+      "mappedBy": "user"
+    },
+    "givenName": {
+      "type": "string",
+      "required": true
+    },
+    "familyName": {
+      "type": "string",
+      "required": true
+    },
+    "birthDate": {
+      "type": "date"
+    },
+    "ipAddress": {
+      "type": "string"
     }
   }
 }

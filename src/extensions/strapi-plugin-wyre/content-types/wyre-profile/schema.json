@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "wyre_profiles",
+  "info": {
+    "singularName": "wyre-profile",
+    "pluralName": "wyre-profiles",
+    "displayName": "Wyre profile",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "attributes": {
+    "email": {
+      "type": "email"
+    },
+    "givenName": {
+      "type": "string",
+      "required": true
+    },
+    "familyName": {
+      "type": "string",
+      "required": true
+    },
+    "phone": {
+      "type": "string",
+      "required": true
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    }
+  }
+}

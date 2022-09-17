@@ -1,8 +1,8 @@
 module.exports = [
     {
         method: "POST",
-        path: "/create-wallet-reservation",
-        handler: "wyre.createWalletReservation",
+        path: "/create-payment-order",
+        handler: "wyreController.createPaymentOrder",
         config: {
             middlewares: ['plugin::strapi-provider-stytch.isRegistered'],
             description:
@@ -16,8 +16,8 @@ module.exports = [
     },
     {
         method: "POST",
-        path: "/create-order",
-        handler: "wyre.createOrder",
+        path: "/update-profile",
+        handler: "wyreController.updateWyreProfile",
         config: {
             middlewares: ['plugin::strapi-provider-stytch.isRegistered'],
             description:
@@ -31,8 +31,8 @@ module.exports = [
     },
     {
         method: "POST",
-        path: "/create-transfer",
-        handler: "wyre.createTransfer",
+        path: "/create-wyre-profile",
+        handler: "wyreController.createWyreProfile",
         config: {
             middlewares: ['plugin::strapi-provider-stytch.isRegistered'],
             description:
