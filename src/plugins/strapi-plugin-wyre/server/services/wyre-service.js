@@ -6,22 +6,8 @@
  * @description: A set of functions similar to controller's actions to avoid code duplication.
  */
 
-const request = require('request');
-const { createPaymentOrder } = require('../controllers/wyre-controller');
-
-const getOptions = {
-  method: 'GET',
-  url: 'https://api.testwyre.com/v3/debitcard/authorization/',
-  headers: { accept: 'application/json' }
-};
-
-const postOptions = {
-  method: 'POST',
-  url: 'https://api.testwyre.com/v3/orders/reserve',
-  headers: { accept: 'application/json', 'content-type': 'application/json' },
-  body: {},
-  json: true
-};
+const { sanitize } = require('@strapi/utils');
+const axios = require('axios').default;
 
 module.exports = (
   {
@@ -35,108 +21,115 @@ module.exports = (
 
     },
 
-    async createOrder(data) {
-      const reservation = await this.createWalletOrderReservation(data);
+    async createOrder(paymentOrder, wyreProfile) {
+      strapi.log.debug("Creating wallet order reservation");
+      const { reservation } = await this.wyreCreateWalletReservation(paymentOrder);
 
+      strapi.log.debug(reservation);
+      if (!reservation) {
+        return;
+      }
+      strapi.log.debug("Wallet reservation created, creating order....")
 
-      //Extract data, save reusable info in wyre-profile
-
+      const response = await this.wyreCreateOrder(reservation, paymentOrder, wyreProfile);
+      return response;
     },
 
-    async createPaymentOrder(paymentOrder, wyreProfile) {
+    async wyreCreateOrder(reservationId, paymentOrder, wyreProfile) {
+      strapi.log.debug("wyreService.createPaymentOrder");
 
-      const { reservation } = this.createPaymentReservation(paymentOrder);
-
-      const request = require('request');
+      const secretKey = strapi.config.get('wyre.wyre_secret_key');
+      const referrerAccountId = strapi.config.get('wyre.wyre_account_id');
+      const { debitCards, addresses, familyName, email, phone, givenName } = wyreProfile;
+      const { amount, sourceCurrency, destCurrency, dest } = paymentOrder;
+      const srn = "ethereum:".concat(dest);
+      const bearerToken = 'Bearer '.concat(secretKey);
+      const axios = require('axios').default;
 
       const options = {
         method: 'POST',
         url: 'https://api.testwyre.com/v3/debitcard/process/partner',
-        headers: { accept: 'application/json', 'content-type': 'application/json' },
-        body: {
-          "debitCard": paymentOrder.debitcard,
-          reservationId: reservation,
-          trigger3ds: true,
-          amount: paymentOrder.amount,
-          sourceCurrency: paymentOrder.sourceCurrency,
-          destCurrency: paymentOrder.destCurrency,
-          dest: paymentOrder.dest,
-          referrerAccountId: 'AC_Y22RAQSKYV6',
-          givenName: wyreProfile.givenName,
-          familyName: wyreProfile.familyName,
-          email: wyreProfile.email,
-          ipAddress: '1.1.1.1',
-          phone: wyreProfile.phone,
-          address: {
-            street1: wyreProfile.street1,
-            city: wyreProfile.city,
-            state: wyreProfile.state,
-            postalCode: wyreProfile.postalCode,
-            country: wyreProfile.country,
-          }
+        headers: {
+          accept: 'application/json',
+          'content-type': 'application/json',
+          authorization: bearerToken
         },
-        json: true
+        data: {
+          debitCard: debitCards[0],
+          address: addresses[0],
+          reservationId: reservationId,
+          trigger3ds: true,
+          amount: amount,
+          sourceCurrency: sourceCurrency,
+          destCurrency: destCurrency,
+          dest: srn,
+          referrerAccountId: referrerAccountId,
+          givenName: givenName,
+          familyName: familyName,
+          email: email,
+          phone: phone,
+          ipAddress: '1.1.1.1'
+        }
       };
 
-      request(options, function (error, response, body) {
-        if (error) throw new Error(error);
-
-        console.log(body);
-      });
-
-
-
+      try {
+        const { data } = await axios.request(options);
+        return data;
+      } catch (err) {
+        return err;
+      }
     },
 
-    async createPaymentReservation(paymentOrder) {
+
+
+    async wyreCreateWalletReservation(paymentOrder) {
+      strapi.log.debug("wyreService.createWalletReservation");
+      const { amount, sourceCurrency, destCurrency, dest } = paymentOrder;
+      const referrerAccountId = strapi.config.get('wyre.wyre_account_id');
+      const secretKey = strapi.config.get('wyre.wyre_secret_key');
+      const bearerToken = 'Bearer '.concat(secretKey);
+      const srn = "ethereum:".concat(dest);
       const options = {
         method: 'POST',
         url: 'https://api.testwyre.com/v3/orders/reserve',
-        headers: { accept: 'application/json', 'content-type': 'application/json' },
-        body: {
-          amountIncludeFees: true,
-          sourceAmount: paymentOrder.amount,
-          sourceCurrency: paymentOrder.sourceCurrency,
-          destCurrency: paymentOrder.destCurrency,
-          referrerAccountId: 'AC_YV8LCV3C9HZ',
-          dest: paymentOrder.dest,
+        headers: {
+          accept: 'application/json',
+          'content-type': 'application/json',
+          authorization: bearerToken
         },
-        json: true
+        data: {
+          sourceAmount: amount,
+          paymentMethod: 'debit-card',
+          amountIncludeFees: true,
+          sourceCurrency: sourceCurrency,
+          destCurrency: destCurrency,
+          referrerAccountId: referrerAccountId,
+          dest: srn,
+          country: 'US'
+        }
       };
 
-      request(options, function (error, response, body) {
-        if (error) throw new Error(error);
-
-        return body;
-      });
+      try {
+        const { data } = await axios.request(options);
+        return data;
+      } catch (err) {
+        return err;
+      }
     },
 
-    async createWalletOrderReservation(data) {
 
-      const { amount, paymentMethod, sourceCurrency, destCurrency, dest, referrerAccountId } = data;
-
-
-      const req = {
-        amount,
-        paymentMethod,
-        sourceCurrency,
-        destCurrency,
-        dest,
-        referrerAccountId,
-        "amountIncludeFees": true,
+    async sanitizeWyreProfile(wyreProfile) {
+      const wyreProfileSchema = strapi.getModel('plugin::strapi-plugin-wyre.wyre-profile')
+      let sanitizedWyreProfile = await sanitize.sanitizers.defaultSanitizeOutput(wyreProfileSchema)
+      if (!sanitizedWyreProfile.id && wyreProfile.id) {
+        sanitizedWyreProfile.id = wyreProfile.id;
       }
-
-
-      request({ ...postOptions, req }, function (error, response, body) {
-        if (error) throw new Error(error);
-
-        const { reservation } = body;
-        return { ...data, reservation };
-      });
-
-
+      return sanitizedWyreProfile;
     }
 
+
   };
+
+
 
 };

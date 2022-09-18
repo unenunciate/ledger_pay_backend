@@ -44,5 +44,36 @@ module.exports = [
             },
         },
     },
+    {
+        method: "POST",
+        path: "/add-address",
+        handler: "wyreController.addAddressToProfile",
+        config: {
+            middlewares: ['plugin::strapi-provider-stytch.isRegistered'],
+            description:
+                "Add an address to wyre profile",
+            tag: {
+                plugin: "strapi-plugin-wyre",
+                name: "Create address",
+                actionType: "create",
+            },
+        },
+    },
+    {
+        method: "POST",
+        path: "/add-debit-card",
+        handler: "wyreController.addDebitCardToProfile",
+        config: {
+            middlewares: ['plugin::strapi-provider-stytch.isRegistered'],
+            description:
+                "Add a debit card to wyre profile",
+            tag: {
+                plugin: "strapi-plugin-wyre",
+                name: "Create debitcard",
+                actionType: "create",
+            },
+        },
+    },
+
 
 ]

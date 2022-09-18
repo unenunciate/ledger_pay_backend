@@ -20,19 +20,23 @@ module.exports = {
 
     const user = ctx.state.user;
     const paymentOrder = ctx.request.body;
-    const wyreProfile = strapi.db.query("plugin::strapi-plugin-wyre.wyre-profile").findOne({
+    const wyreProfile = await strapi.db.query("plugin::strapi-plugin-wyre.wyre-profile").findOne({
       where: { user: user.id },
       populate: true,
     })
 
-    const { transfer } = await wyreService.createPaymentOrder(paymentOrder, wyreProfile);
+    console.log(wyreProfile);
+    const response = await wyreService.createOrder(paymentOrder, wyreProfile);
 
-    if (transfer) {
-      ctx.send({
-        transfer,
-      })
+    console.log(response);
+    if (!response) {
+      ctx.badRequest('wyre.error');
+
     }
-    ctx.badRequest('wyre.error');
+    strapi.log.debug("Wyre Order created succesfully");
+    ctx.send({
+      response,
+    })
 
   },
 
@@ -50,6 +54,59 @@ module.exports = {
       wyreProfile
     })
 
+
+  },
+
+  async addDebitCardToProfile(ctx) {
+
+    strapi.log.debug("wyreController.addDebitCard");
+    const debitCard = ctx.request.body;
+    const user = ctx.state.user;
+
+    const newDebitCard = await strapi.db.query('plugin::strapi-plugin-wyre.debit-card').create({
+      data: debitCard,
+    })
+
+    console.log(newDebitCard);
+    const wyreProfile = await strapi.db.query("plugin::strapi-plugin-wyre.wyre-profile").update({
+      where: { user: user.id },
+      data: { debitCards: newDebitCard.id },
+      populate: ['debitCards'],
+    });
+
+    console.log(wyreProfile);
+
+    return wyreProfile;
+
+  },
+
+  async deleteDebitCardFromProfile(ctx) {
+
+  },
+
+  async addAddressToProfile(ctx) {
+
+    strapi.log.debug("wyreController.addAddress");
+    const address = ctx.request.body;
+    const user = ctx.state.user;
+
+
+    const newAddress = await strapi.db.query('plugin::strapi-plugin-wyre.address').create({
+      data: address,
+    })
+
+    console.log(newAddress);
+    const wyreProfile = await strapi.db.query("plugin::strapi-plugin-wyre.wyre-profile").update({
+      where: { user: user.id },
+      data: { addresses: newAddress.id },
+      populate: ['addresses'],
+    });
+
+    console.log(wyreProfile);
+    return wyreProfile
+
+  },
+  async deleteAddressFromProfile(ctx) {
 
   },
 
@@ -74,7 +131,7 @@ module.exports = {
       where: { stytchUUID: user.stytchUUID },
       data: {
         wyreProfile: { id: wyreProfile.id },
-        populate: ['*'],
+        populate: ['wyre-profile'],
       }
     })
 

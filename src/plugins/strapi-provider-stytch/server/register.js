@@ -25,6 +25,12 @@ module.exports = ({ strapi }) => {
     name: "custom-session-token-stytch-verifier",
     authenticate: async function (ctx, next) {
 
+      const { stytchService } = strapi.plugins['strapi-provider-stytch'].services;
+      const isEnabled = await stytchService.isEnabled();
+
+      if (!isEnabled) {
+        return { authenticated: false };
+      }
       strapi.log.info("authentication");
 
       const { authorization } = ctx.request.header || null;
@@ -44,11 +50,7 @@ module.exports = ({ strapi }) => {
         if (!user) {
           return { error: "Invalid credentials" };
         }
-        const strapiUser = await strapi.db.
-          query('plugin::users-permissions.user').findOne({
-            where: { stytchUUID: user.user_id },
-            populate: ['role'],
-          })
+        const strapiUser = await stytchService.user({ stytchUUID: user.user_id });
 
         if (!strapiUser) {
           strapi.log.debug("strapiUser not found")

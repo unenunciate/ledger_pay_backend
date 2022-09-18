@@ -12,27 +12,37 @@
     "comment": ""
   },
   "attributes": {
-    "status": {
-      "type": "string"
-    },
-    "partnerId": {
-      "type": "string"
-    },
-    "type": {
-      "type": "string"
-    },
-    "wallet_address": {
-      "type": "string",
-      "minLength": 40
-    },
-    "wyreUUID": {
-      "type": "uid"
-    },
     "email": {
-      "type": "email"
+      "type": "email",
+      "required": true
     },
-    "ssn": {
-      "type": "string"
+    "givenName": {
+      "type": "string",
+      "required": true
+    },
+    "familyName": {
+      "type": "string",
+      "required": true
+    },
+    "phone": {
+      "type": "string",
+      "required": true
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "addresses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::strapi-plugin-wyre.address"
+    },
+    "debitCards": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::strapi-plugin-wyre.debit-card",
+      "private": true
     }
   }
 }

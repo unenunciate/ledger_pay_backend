@@ -118,6 +118,7 @@ module.exports = (
     },
 
 
+
     async getUserFromStytch(stytchUUID) {
       return await client.users.get(stytchUUID)
 

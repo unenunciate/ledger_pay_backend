@@ -1,0 +1,27 @@
+{
+  "kind": "collectionType",
+  "collectionName": "debit_cards",
+  "info": {
+    "singularName": "debit-card",
+    "pluralName": "debit-cards",
+    "displayName": "Debit Card"
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "attributes": {
+    "number": {
+      "type": "string"
+    },
+    "year": {
+      "type": "string"
+    },
+    "month": {
+      "type": "string"
+    },
+    "cvv": {
+      "type": "string"
+    }
+  }
+}

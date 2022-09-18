@@ -51,26 +51,6 @@
       "type": "email",
       "minLength": 6,
       "required": false
-    },
-    "addresses": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::address.address",
-      "mappedBy": "user"
-    },
-    "givenName": {
-      "type": "string",
-      "required": true
-    },
-    "familyName": {
-      "type": "string",
-      "required": true
-    },
-    "birthDate": {
-      "type": "date"
-    },
-    "ipAddress": {
-      "type": "string"
     }
   }
 }
