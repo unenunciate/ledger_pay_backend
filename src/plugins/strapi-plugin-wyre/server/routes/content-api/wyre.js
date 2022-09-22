@@ -75,5 +75,39 @@ module.exports = [
         },
     },
 
+    {
+        method: "POST",
+        path: "/addBank",
+        handler: "wyreController.addPaymentMethod",
+        config: {
+            middlewares: ['plugin::strapi-provider-stytch.isRegistered'],
+            description:
+                "Add a bank account for withdraw to wyre profile",
+            tag: {
+                plugin: "strapi-plugin-wyre",
+                name: "Create bank account",
+                actionType: "create",
+            },
+        },
+    },
+
+    {
+        method: "POST",
+        path: "/withdraw",
+        handler: "wyreController.withdraw",
+        config: {
+            middlewares: ['plugin::strapi-provider-stytch.isRegistered'],
+            description:
+                "Create a withdraw from user to bank account",
+            tag: {
+                plugin: "strapi-plugin-wyre",
+                name: "Create withdraw",
+                actionType: "create",
+            },
+        },
+    },
+
+
+
 
 ]

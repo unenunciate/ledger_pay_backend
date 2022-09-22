@@ -113,6 +113,7 @@ module.exports = {
   async createWyreProfile(ctx) {
 
     strapi.log.debug('wyreController.createWyreProfile');
+    const { wyreService } = strapi.plugins['strapi-plugin-wyre'].services;
     const data = ctx.request.body;
     const user = ctx.state.user;
 
@@ -122,6 +123,15 @@ module.exports = {
       data: {
         ...data,
         user: { id: user.id }
+      },
+    })
+
+    const { id } = await wyreService.createWyreUser(wyreProfile);
+
+    const updatedWyreProfile = await strapi.db.query("plugin::strapi-plugin-wyre.wyre-profile").update({
+      where: { id: wyreProfile.id },
+      data: {
+        wyreUUID: id
       },
     })
 
@@ -137,10 +147,40 @@ module.exports = {
 
     ctx.send({
       updatedUser,
-      wyreProfile
+      updatedWyreProfile
     })
 
   },
+
+  async addPaymentMethod(ctx) {
+    const { wyreService } = strapi.plugins['strapi-plugin-wyre'].services;
+    const user = ctx.state.user;
+
+    const { last4Digits, srn, id } = wyreService.AddPaymentMethod();
+
+
+    const bankAccount = await strapi.db.query('plugin::strapi-plugin-wyre.address').create({
+      data: {
+        srn,
+        accountId: id,
+        lastDigits: last4Digits,
+      },
+    })
+
+    console.log(newAddress);
+
+    const wyreProfile = await strapi.db.query("plugin::strapi-plugin-wyre.wyre-profile").update({
+      where: { user: user.id },
+      data: {
+        "bankAccount": bankAccount.id,
+      },
+      pupulate: ['bankAccount'],
+    })
+
+
+    console.log(wyreProfile);
+    return wyreProfile
+  }
 
 
 

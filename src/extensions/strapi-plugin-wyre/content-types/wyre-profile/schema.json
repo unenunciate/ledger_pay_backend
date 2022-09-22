@@ -52,6 +52,11 @@
       "relation": "oneToMany",
       "target": "plugin::strapi-plugin-wyre.debit-card",
       "private": true
+    },
+    "bankAccount": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::strapi-plugin-wyre.bank-account"
     }
   }
 }

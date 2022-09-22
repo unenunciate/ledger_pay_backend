@@ -125,6 +125,108 @@ module.exports = (
         sanitizedWyreProfile.id = wyreProfile.id;
       }
       return sanitizedWyreProfile;
+    },
+
+    async createWyreUser(wyreProfile) {
+      strapi.log.debug("wyreService.createWyreUser");
+
+      const secretKey = strapi.config.get('wyre.wyre_secret_key');
+      const bearerToken = 'Bearer '.concat(secretKey);
+
+      const options = {
+        method: 'POST',
+        url: 'https://api.testwyre.com/v3/orders/reserve',
+        headers: {
+          accept: 'application/json',
+          'content-type': 'application/json',
+          authorization: bearerToken
+        },
+        data: {
+
+          "fields": {
+            "firstName": wyreProfile.giveName,
+            "lastName": wyreProfile.familyName,
+            "dateOfBirth": wyreProfile.dateOfBirth,
+            "residenceAddress": {
+              "street1": wyreProfile.addresses[0].street1,
+              "street2": null,
+              "city": wyreProfile.addresses[0].city,
+              "state": wyreProfile.addresses[0].state,
+              "postalCode": wyreProfile.addresses[0].postalCode,
+              "country": wyreProfile.addresses[0].country
+            }
+          },
+          "blockchains": [
+            "ALL"
+          ],
+          "immediate": false,
+          "scopes": [
+            "TRANSFER"
+          ]
+
+        }
+      };
+
+      try {
+        const { data } = await axios.request(options);
+        console.log("USer created in wyre: ");
+        console.log(data);
+        return data;
+      } catch (err) {
+        return err;
+      }
+    },
+
+    async createWyrePaymentMethod(wyreProfile, data) {
+      strapi.log.debug("wyreService.createWyrePaymentMethod");
+
+      const secretKey = strapi.config.get('wyre.wyre_secret_key');
+      const bearerToken = 'Bearer '.concat(secretKey);
+      const address = wyreProfile.addresses[0];
+      const date = new Date(wyreProfile.dateOfBirth);
+      const { accountNumber, routingNumber } = data;
+
+
+      const options = {
+        method: 'POST',
+        url: 'https://api.testwyre.com/v3/orders/reserve',
+        headers: {
+          accept: 'application/json',
+          'content-type': 'application/json',
+          authorization: bearerToken
+        },
+        data: {
+          "paymentMethodType": "INTERNATIONAL_TRANSFER",
+          "paymentType": "LOCAL_BANK_WIRE",
+          "currency": "USD",
+          "country": "US",
+          "beneficiaryType": "INDIVIDUAL",
+          "firstNameOnAccount": wyreProfile.giveName,
+          "lastNameOnAccount": wyreProfile.familyName,
+          "beneficiaryAddress": address.street1,
+          "beneficiaryAddress2": "",
+          "beneficiaryCity": address.city,
+          "beneficiaryPostal": address.postalCode,
+          "beneficiaryPhoneNumber": wyreProfile.phone,
+          "beneficaryState": address.state,
+          "beneficiaryDobDay": date.getDate(),
+          "beneficiaryDobMonth": date.getMonth(),
+          "beneficiaryDobYear": date.getFullYear(),
+          "accountNumber": accountNumber,
+          "routingNumber": routingNumber,
+          "accountType": "CHECKING",
+          "chargeablePM": false
+        }
+      };
+
+      try {
+        const { data } = await axios.request(options);
+        console.log("USer created in wyre: ");
+        console.log(data);
+        return data;
+      } catch (err) {
+        return err;
+      }
     }
 
 
