@@ -180,10 +180,15 @@ module.exports = {
 
     console.log(wyreProfile);
     return wyreProfile
-  }
+  },
 
+  async withdraw(ctx) {
 
+  },
 
+  async createSuperfluidStream(ctx) {
+
+  },
 
 
 };
