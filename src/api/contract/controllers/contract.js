@@ -6,4 +6,8 @@
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::contract.contract');
+const core = createCoreController('api::contract.contract');
+
+module.exports = {
+    
+};
