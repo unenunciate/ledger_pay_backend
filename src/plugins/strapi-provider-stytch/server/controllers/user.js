@@ -40,6 +40,20 @@ module.exports = {
         });
     },
 
+    async createUserFromStytch(ctx) {
+        const { stytchService } = strapi.plugins['strapi-provider-stytch'].services;
+
+        await stytchService.verification(ctx);
+
+        const user = ctx.state.user;
+
+        const stytchUser = stytchService.getUserFromStytch(user.stytchUUID);
+
+        return ctx.send({
+            stytchUser,
+        });
+    },
+
     async deleteEmail(ctx) {
 
         //TODO

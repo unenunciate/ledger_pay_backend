@@ -3,13 +3,28 @@ module.exports = [
         method: "POST",
         path: "/create-payment-order",
         handler: "wyreController.createPaymentOrder",
+        policies: ['plugin::strapi-provider-stytch.isAuthenticated'],
         config: {
-            middlewares: ['plugin::strapi-provider-stytch.isRegistered'],
             description:
                 "Create",
             tag: {
                 plugin: "strapi-plugin-wyre",
-                name: "Create wyre user",
+                name: "Create payment order",
+                actionType: "create",
+            },
+        },
+    },
+    {
+        method: "POST",
+        path: "/create-withdrawal-order",
+        handler: "wyreController.createWithdrawalOrder",
+        policies: ['plugin::strapi-provider-stytch.isAuthenticated'],
+        config: {
+            description:
+                "Create",
+            tag: {
+                plugin: "strapi-plugin-wyre",
+                name: "Create withdrawal order",
                 actionType: "create",
             },
         },
@@ -18,8 +33,8 @@ module.exports = [
         method: "POST",
         path: "/update-profile",
         handler: "wyreController.updateWyreProfile",
+        policies: ['plugin::strapi-provider-stytch.isAuthenticated'],
         config: {
-            middlewares: ['plugin::strapi-provider-stytch.isRegistered'],
             description:
                 "Create paymentorder",
             tag: {
@@ -31,25 +46,9 @@ module.exports = [
     },
     {
         method: "POST",
-        path: "/create-wyre-profile",
-        handler: "wyreController.createWyreProfile",
-        config: {
-            middlewares: ['plugin::strapi-provider-stytch.isRegistered'],
-            description:
-                "Create transfer to destination",
-            tag: {
-                plugin: "strapi-plugin-wyre",
-                name: "Create transfer",
-                actionType: "create",
-            },
-        },
-    },
-    {
-        method: "POST",
         path: "/add-address",
         handler: "wyreController.addAddressToProfile",
         config: {
-            middlewares: ['plugin::strapi-provider-stytch.isRegistered'],
             description:
                 "Add an address to wyre profile",
             tag: {
@@ -60,17 +59,76 @@ module.exports = [
         },
     },
     {
+        method: "PUT",
+        path: "/update-address",
+        handler: "wyreController.updateAddress",
+        config: {
+            description:
+                "Update an address to wyre profile",
+            tag: {
+                plugin: "strapi-plugin-wyre",
+                name: "Update address",
+                actionType: "update",
+            },
+        },
+    },
+    {
         method: "POST",
         path: "/add-debit-card",
         handler: "wyreController.addDebitCardToProfile",
+        policies: ['plugin::strapi-provider-stytch.isAuthenticated'],
         config: {
-            middlewares: ['plugin::strapi-provider-stytch.isRegistered'],
             description:
                 "Add a debit card to wyre profile",
             tag: {
                 plugin: "strapi-plugin-wyre",
-                name: "Create debitcard",
+                name: "Create debitCard",
                 actionType: "create",
+            },
+        },
+    },
+    {
+        method: "PUT",
+        path: "/update-debit-card",
+        handler: "wyreController.updateDebitCard",
+        policies: ['plugin::strapi-provider-stytch.isAuthenticated'],
+        config: {
+            description:
+                "Update a debit card",
+            tag: {
+                plugin: "strapi-plugin-wyre",
+                name: "Update debitCard",
+                actionType: "update",
+            },
+        },
+    },
+    {
+        method: "POST",
+        path: "/add-bank",
+        handler: "wyreController.addBankToProfile",
+        policies: ['plugin::strapi-provider-stytch.isAuthenticated'],
+        config: {
+            description:
+                "Add a bank account to wyre profile",
+            tag: {
+                plugin: "strapi-plugin-wyre",
+                name: "Create Bank",
+                actionType: "create",
+            },
+        },
+    },
+    {
+        method: "PUT",
+        path: "/update-bank",
+        handler: "wyreController.updateBank",
+        policies: ['plugin::strapi-provider-stytch.isAuthenticated'],
+        config: {
+            description:
+                "Update a bank account",
+            tag: {
+                plugin: "strapi-plugin-wyre",
+                name: "Update Bank",
+                actionType: "update",
             },
         },
     },

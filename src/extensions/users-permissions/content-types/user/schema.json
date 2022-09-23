@@ -51,6 +51,33 @@
       "type": "email",
       "minLength": 6,
       "required": false
+    },
+    "phone": {
+      "type": "string"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "wallets": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::contract.contract",
+      "mappedBy": "user"
+    },
+    "wyre": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::strapi-plugin-wyre.wyre-profile",
+      "inversedBy": "user"
+    },
+    "birthday": {
+      "type": "date"
+    },
+    "discoverable": {
+      "type": "boolean"
     }
   }
 }

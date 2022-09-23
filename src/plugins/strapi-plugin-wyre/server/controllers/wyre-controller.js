@@ -40,6 +40,31 @@ module.exports = {
 
   },
 
+  async createWithdrawalOrder(ctx) {
+    const { wyreService } = strapi.plugins['strapi-plugin-wyre'].services;
+
+    const user = ctx.state.user;
+    const paymentOrder = ctx.request.body;
+    const wyreProfile = await strapi.db.query("plugin::strapi-plugin-wyre.wyre-profile").findOne({
+      where: { user: user.id },
+      populate: true,
+    })
+
+    console.log(wyreProfile);
+    const response = await wyreService.createOrder(paymentOrder, wyreProfile);
+
+    console.log(response);
+    if (!response) {
+      ctx.badRequest('wyre.error');
+
+    }
+    strapi.log.debug("Wyre Order created succesfully");
+    ctx.send({
+      response,
+    })
+
+  },
+
   async updateWyreProfile(ctx) {
 
     const data = ctx.request.body;
@@ -80,6 +105,37 @@ module.exports = {
 
   },
 
+  async updateDebitCard () {
+    
+  },
+
+  async addBankToProfile(ctx) {
+
+    strapi.log.debug("wyreController.addDebitCard");
+    const debitCard = ctx.request.body;
+    const user = ctx.state.user;
+
+    const newDebitCard = await strapi.db.query('plugin::strapi-plugin-wyre.debit-card').create({
+      data: debitCard,
+    })
+
+    console.log(newDebitCard);
+    const wyreProfile = await strapi.db.query("plugin::strapi-plugin-wyre.wyre-profile").update({
+      where: { user: user.id },
+      data: { debitCards: newDebitCard.id },
+      populate: ['debitCards'],
+    });
+
+    console.log(wyreProfile);
+
+    return wyreProfile;
+
+  },
+
+  async updateBank () {
+    
+  },
+
   async deleteDebitCardFromProfile(ctx) {
 
   },
@@ -106,41 +162,34 @@ module.exports = {
     return wyreProfile
 
   },
+
+  async updateAddress(ctx) {
+
+    strapi.log.debug("wyreController.addAddress");
+    const address = ctx.request.body;
+    const user = ctx.state.user;
+
+
+    const newAddress = await strapi.db.query('plugin::strapi-plugin-wyre.address').create({
+      data: address,
+    })
+
+    console.log(newAddress);
+    const wyreProfile = await strapi.db.query("plugin::strapi-plugin-wyre.wyre-profile").update({
+      where: { user: user.id },
+      data: { addresses: newAddress.id },
+      populate: ['addresses'],
+    });
+
+    console.log(wyreProfile);
+    return wyreProfile
+
+  },
+
   async deleteAddressFromProfile(ctx) {
 
   },
 
-  async createWyreProfile(ctx) {
-
-    strapi.log.debug('wyreController.createWyreProfile');
-    const data = ctx.request.body;
-    const user = ctx.state.user;
-
-    console.log(data)
-    console.log(user);
-    const wyreProfile = await strapi.db.query("plugin::strapi-plugin-wyre.wyre-profile").create({
-      data: {
-        ...data,
-        user: { id: user.id }
-      },
-    })
-
-    console.log(wyreProfile);
-
-    const updatedUser = await strapi.db.query("plugin::users-permissions.user").update({
-      where: { stytchUUID: user.stytchUUID },
-      data: {
-        wyreProfile: { id: wyreProfile.id },
-        populate: ['wyre-profile'],
-      }
-    })
-
-    ctx.send({
-      updatedUser,
-      wyreProfile
-    })
-
-  },
 
 
 

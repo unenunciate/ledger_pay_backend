@@ -29,43 +29,43 @@ module.exports = ({ strapi }) => {
       const isEnabled = await stytchService.isEnabled();
 
       if (!isEnabled) {
-        return { authenticated: false };
+        return ctx.badRequest('auth.disabled');
       }
-      strapi.log.info("authentication");
 
       const { authorization } = ctx.request.header || null;
 
       if (!authorization) {
-        return { authenticated: false };
+        return ctx.badRequest('No authorization header.');
       }
 
       const session_token = authorization.substring(7);
+
       if (!session_token) {
-        return { authenticated: false };
+        return ctx.badRequest('No bearer token');
       }
 
 
       try {
         const { user } = await client.sessions.authenticate({ "session_token": session_token });
+
         if (!user) {
-          return { error: "Invalid credentials" };
+            return ctx.badRequest('No stytch user found for bearer token.');
         }
+
         const strapiUser = await stytchService.user({ stytchUUID: user.user_id });
 
         if (!strapiUser) {
           strapi.log.debug("strapiUser not found")
-          return { authenticated: false };
+          return ctx.badRequest('No strapi user found for bearer token.');
         }
+
         ctx.state.user = strapiUser;
         ctx.cookies.set("session_token", session_token);
 
-        return {
-          authenticated: true,
-          credentials: strapiUser,
-        };
+        next();
 
       } catch (err) {
-        return { authenticated: false };
+        return ctx.badRequest('Token invalid.');
       }
 
     },

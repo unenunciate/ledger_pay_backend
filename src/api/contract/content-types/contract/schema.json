@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "contracts",
+  "info": {
+    "singularName": "contract",
+    "pluralName": "contracts",
+    "displayName": "Contract"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "address": {
+      "type": "text"
+    },
+    "chainId": {
+      "type": "integer"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "wallets"
+    },
+    "deployed": {
+      "type": "boolean",
+      "default": false
+    },
+    "hasWyre": {
+      "type": "boolean"
+    },
+    "hasFlow": {
+      "type": "boolean"
+    },
+    "hasWorldcoin": {
+      "type": "boolean"
+    },
+    "salt": {
+      "type": "json"
+    },
+    "initalOwner": {
+      "type": "text"
+    },
+    "owner": {
+      "type": "text"
+    },
+    "hasENS": {
+      "type": "boolean"
+    }
+  }
+}

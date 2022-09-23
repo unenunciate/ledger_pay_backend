@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "wyre_profiles",
+  "info": {
+    "singularName": "wyre-profile",
+    "pluralName": "wyre-profiles",
+    "displayName": "Wyre profile",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "attributes": {
+    "addresses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::strapi-plugin-wyre.address"
+    },
+    "debitCards": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::strapi-plugin-wyre.debit-card",
+      "mappedBy": "profile1"
+    },
+    "banks": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::bank.bank",
+      "mappedBy": "profile"
+    },
+    "user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "wyre"
+    }
+  }
+}

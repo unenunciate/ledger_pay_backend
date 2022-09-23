@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "debit_cards",
+  "info": {
+    "singularName": "debit-card",
+    "pluralName": "debit-cards",
+    "displayName": "Debit Card",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "attributes": {
+    "number": {
+      "type": "string"
+    },
+    "year": {
+      "type": "string"
+    },
+    "month": {
+      "type": "string"
+    },
+    "cvv": {
+      "type": "string"
+    },
+    "address": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::strapi-plugin-wyre.address"
+    },
+    "nickname": {
+      "type": "string"
+    },
+    "issuer": {
+      "type": "enumeration",
+      "enum": [
+        "VISA",
+        "MASTERCARD"
+      ]
+    },
+    "profile1": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::strapi-plugin-wyre.wyre-profile",
+      "inversedBy": "debitCards"
+    }
+  }
+}

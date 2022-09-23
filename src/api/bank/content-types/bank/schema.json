@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "banks",
+  "info": {
+    "singularName": "bank",
+    "pluralName": "banks",
+    "displayName": "Bank",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "account": {
+      "type": "biginteger",
+      "private": true
+    },
+    "routing": {
+      "type": "biginteger"
+    },
+    "profile": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::strapi-plugin-wyre.wyre-profile",
+      "inversedBy": "banks"
+    },
+    "address": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::strapi-plugin-wyre.address"
+    },
+    "nickname": {
+      "type": "string"
+    }
+  }
+}
