@@ -221,7 +221,7 @@ module.exports = (
 
       try {
         const { data } = await axios.request(options);
-        console.log("USer created in wyre: ");
+        console.log("Bank account created in wyre: ");
         console.log(data);
         return data;
       } catch (err) {

@@ -156,7 +156,7 @@ module.exports = {
     const { wyreService } = strapi.plugins['strapi-plugin-wyre'].services;
     const user = ctx.state.user;
 
-    const { last4Digits, srn, id } = wyreService.AddPaymentMethod();
+    const { last4Digits, srn, id } = wyreService.createWyrePaymentMethod();
 
 
     const bankAccount = await strapi.db.query('plugin::strapi-plugin-wyre.address').create({

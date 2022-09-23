@@ -47,6 +47,11 @@
       "required": true,
       "minLength": 3
     },
+    "domainName": {
+      "type": "string",
+      "required": false,
+      "minLength": 3
+    },
     "email": {
       "type": "email",
       "minLength": 6,
