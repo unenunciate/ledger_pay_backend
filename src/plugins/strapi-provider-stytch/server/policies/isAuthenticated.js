@@ -1,5 +1,14 @@
 'use strict';
 
+const stytch = require("stytch");
+
+const client = new stytch.Client({
+  project_id: strapi.config.get('stytch.project_id'),
+  secret: strapi.config.get('stytch.secret_key'),
+  env: stytch.envs.test,
+});
+
+
 module.exports = async (ctx, next) => {
   const { stytchService } = strapi.plugins['strapi-provider-stytch'].services;
   const isEnabled = await stytchService.isEnabled();
