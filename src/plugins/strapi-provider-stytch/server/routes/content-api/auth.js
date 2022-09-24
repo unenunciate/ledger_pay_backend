@@ -7,7 +7,7 @@ module.exports = [
             auth: false,
             policies: [],
             description:
-                "Register/Login in Stytch with magin link",
+                "Register/Login in Stytch with magic link",
             tag: {
                 plugin: "strapi-provider-stytch",
                 name: "Register stytch user",
