@@ -31,13 +31,15 @@ module.exports = ({ env }) => ({
             },
           },
           actionOptions: {
-            upload: {},
+            upload: {
+                enabled: true,
+            },
             uploadStream: {},
             delete: {},
           },
         },
     },
-    
+
     "fuzzy-search": {
         enabled: true,
         config: {

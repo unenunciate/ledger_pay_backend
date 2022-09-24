@@ -1,5 +1,14 @@
 'use strict';
 
+
+const { castArray, map } = require('lodash/fp');
+const { ForbiddenError, UnauthorizedError } = require('@strapi/utils').errors;
+
+
+const getAdvancedSettings = () => {
+  return strapi.store({ type: 'plugin', name: 'users-permissions' }).get({ key: 'advanced' });
+};
+
 const stytch = require("stytch");
 
 const client = new stytch.Client({
