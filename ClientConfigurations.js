@@ -1,7 +1,9 @@
 const ClientConfigurations = [
     {
+        walletImplementation: "0xD5E1D3Bc2ce01dEb9D3Be6A1b2131196D5023d39",
         paymasterAddress: "0x1184e555D2C56690cB27936357C5A0507Fb3a5d3",
         entryPointAddress: "0x953284cf7e8494563d79f4361895316690f68af5",
+        registrar: "0xb2eA6FeD6276185a5413Ae397E3d6881792B03aA",
         bundlerUrl: "https://bundler.ledgepay.io",
         logoUrl: "/polygon.png",
         Chain: {
@@ -25,8 +27,10 @@ const ClientConfigurations = [
         }
     },
     {
+        walletImplementation: "0xc363505A40493723F6019F5cb3B03C319115963F",
         paymasterAddress: "0x871dc4bFa243DB77c08D14d0c66a98d189e2f770",
         entryPointAddress: "0x9d74Dd4C532fdfBEc19Be8D1c31C2223001Aa816",
+        registrar: "0x8dDf16be6c8aD764cA2DA1FCc28F5ae83d023BCF",
         bundlerUrl: "https://bundler.ledgepay.io",
         logoUrl: "/cronos.svg",
         Chain: {
@@ -50,8 +54,10 @@ const ClientConfigurations = [
         }
     },
     {
+        walletImplementation: "0x8c06c9ad3c7f7dA8AFB02636a54970B4cCf490f1",
         paymasterAddress: "0x9d74Dd4C532fdfBEc19Be8D1c31C2223001Aa816",
         entryPointAddress: "0x20ed209B16EF395db0F0031A1bbf0F17CA5Aaca4",
+        registrar: "0xDe01c60e623961ccebb939cB29ACB737DD7D1bA0",
         bundlerUrl: "https://bundler.ledgepay.io",
         logoUrl: "/optimism.png",
         Chain: {
@@ -75,8 +81,10 @@ const ClientConfigurations = [
           }
     },
     {
+        walletImplementation: "0x7775695Ea68A2ef91bcB1B06434b8E454c17056f",
         paymasterAddress: "0x871dc4bFa243DB77c08D14d0c66a98d189e2f770",
         entryPointAddress: "0x9d74Dd4C532fdfBEc19Be8D1c31C2223001Aa816",
+        registrar: "0x929dd1291b512f16bc2f3827BD462E2a0d118115",
         bundlerUrl: "https://bundler.ledgepay.io",
         Chain: {
             id: 23295,
