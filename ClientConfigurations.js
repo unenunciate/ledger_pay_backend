@@ -1,6 +1,6 @@
 const ClientConfigurations = [
     {
-        walletImplementation: "0xD5E1D3Bc2ce01dEb9D3Be6A1b2131196D5023d39",
+        walletImplementation: "0xd45A54D82Ee589720c976d118724895c42D159A2",
         paymasterAddress: "0x1184e555D2C56690cB27936357C5A0507Fb3a5d3",
         entryPointAddress: "0x953284cf7e8494563d79f4361895316690f68af5",
         registrar: "0xb2eA6FeD6276185a5413Ae397E3d6881792B03aA",

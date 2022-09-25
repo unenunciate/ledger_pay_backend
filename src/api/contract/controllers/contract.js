@@ -42,7 +42,7 @@ module.exports = createCoreController('api::contract.contract', (strapi) => ({
 
        if(label != "") {
 
-        await registrar.register(ethers.utils.keccak256(label), user)
+        await registrar.register(ethers.utils.keccak256(ethers.utils.toUtf8Bytes(label)), user)
 
        }
 
