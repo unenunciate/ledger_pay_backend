@@ -18,10 +18,12 @@ module.exports = createCoreController('api::contract.contract', (strapi) => ({
 
        let wallet;
        if(config.Chain.id === 23295) {
-           wallet = shappire.wrap(new ethers.Wallet(strapi.config("ethers").get('OasisPrivateKey'), provider));
+           wallet = shappire.wrap(new ethers.Wallet(strapi.config("ethers").get('privateKey'), provider));
        } else {
-           wallet = new ethers.Wallet(strapi.config("ethers").get('PrivateKey'), provider)
+           wallet = new ethers.Wallet(strapi.config("ethers").get('privateKey'), provider)
        }
+
+
        
        wallet.sendTransaction()
     }

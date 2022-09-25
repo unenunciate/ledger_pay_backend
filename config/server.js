@@ -8,7 +8,6 @@ module.exports = ({ env }) => ({
       enabled: true,
       publicKey: env("GAS_PUBLIC_KEY"),
       privateKey: env("GAS_PRIVATE_KEY"),
-      oasisPrivateKey: env("OASIS_PRIVATE_KEY"),
     },
   }
 );
