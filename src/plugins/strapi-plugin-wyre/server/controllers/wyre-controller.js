@@ -44,18 +44,18 @@ module.exports = {
     const { wyreService } = strapi.plugins['strapi-plugin-wyre'].services;
 
     const user = ctx.state.user;
-    const paymentOrder = ctx.request.body;
+    const withdrawOrder = ctx.request.body;
     const wyreProfile = await strapi.db.query("plugin::strapi-plugin-wyre.wyre-profile").findOne({
       where: { user: user.id },
       populate: true,
     })
 
     console.log(wyreProfile);
-    const response = await wyreService.createOrder(paymentOrder, wyreProfile);
+    const response = await wyreService.createWithdraw(withdrawOrder, wyreProfile);
 
     console.log(response);
     if (!response) {
-      ctx.badRequest('wyre.error');
+      ctx.badRequest('no.bankAccount');
 
     }
     strapi.log.debug("Wyre Order created succesfully");
@@ -105,25 +105,25 @@ module.exports = {
 
   },
 
-  async updateDebitCard () {
-    
+  async updateDebitCard() {
+
   },
 
   async addBankToProfile(ctx) {
 
-    strapi.log.debug("wyreController.addDebitCard");
-    const debitCard = ctx.request.body;
+    strapi.log.debug("wyreController.addBankToProfile");
+    const bank = ctx.request.body;
     const user = ctx.state.user;
 
-    const newDebitCard = await strapi.db.query('plugin::strapi-plugin-wyre.debit-card').create({
-      data: debitCard,
+    const newBank = await strapi.db.query('api::bank.bank').create({
+      data: bank,
     })
 
-    console.log(newDebitCard);
+    console.log(newBank);
     const wyreProfile = await strapi.db.query("plugin::strapi-plugin-wyre.wyre-profile").update({
       where: { user: user.id },
-      data: { debitCards: newDebitCard.id },
-      populate: ['debitCards'],
+      data: { banks: newBank.id },
+      populate: ['banks'],
     });
 
     console.log(wyreProfile);
@@ -132,8 +132,8 @@ module.exports = {
 
   },
 
-  async updateBank () {
-    
+  async updateBank() {
+
   },
 
   async deleteDebitCardFromProfile(ctx) {

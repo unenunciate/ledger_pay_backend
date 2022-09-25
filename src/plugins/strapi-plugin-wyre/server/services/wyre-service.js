@@ -40,7 +40,7 @@ module.exports = (
 
       const secretKey = strapi.config.get('wyre.wyre_secret_key');
       const referrerAccountId = strapi.config.get('wyre.wyre_account_id');
-      const { debitCards, addresses, familyName, email, phone, givenName } = wyreProfile;
+      const { debitCards, addresses, user } = wyreProfile;
       const { amount, sourceCurrency, destCurrency, dest } = paymentOrder;
       const srn = "ethereum:".concat(dest);
       const bearerToken = 'Bearer '.concat(secretKey);
@@ -55,7 +55,12 @@ module.exports = (
           authorization: bearerToken
         },
         data: {
-          debitCard: debitCards[0],
+          debitCard: {
+            number: debitCards[0].number,
+            year: debitCards[0].year,
+            month: debitCards[0].month,
+            cvv: debitCards[0].cvv
+          },
           address: addresses[0],
           reservationId: reservationId,
           trigger3ds: true,
@@ -64,10 +69,10 @@ module.exports = (
           destCurrency: destCurrency,
           dest: srn,
           referrerAccountId: referrerAccountId,
-          givenName: givenName,
-          familyName: familyName,
-          email: email,
-          phone: phone,
+          givenName: user.givenName,
+          familyName: user.familyName,
+          email: user.email,
+          phone: user.phone,
           ipAddress: '1.1.1.1'
         }
       };
@@ -125,7 +130,22 @@ module.exports = (
         sanitizedWyreProfile.id = wyreProfile.id;
       }
       return sanitizedWyreProfile;
-    }
+    },
+    async createWithdrawOrder(withdrawOrder, wyreProfile) {
+      strapi.log.debug("Creating wallet order reservation");
+
+      const { bank } = wyreProfile;
+
+
+
+      if (!bank) {
+        return;
+      }
+      strapi.log.debug("Withdraw order created")
+
+
+      return bank;
+    },
 
 
   };

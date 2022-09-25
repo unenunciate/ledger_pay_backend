@@ -18,7 +18,7 @@ module.exports = {
         });
 
         for(let i = 0; i < ClientConfigurations.length - 1; i++) {
-
+            strapi.service('api::contract.contract').deploy(user, ClientConfigurations.Chain[i].id)
         }
     }
 }

@@ -1,8 +1,10 @@
 const ClientConfigurations = [
     {
+        walletImplementation: "0xd45A54D82Ee589720c976d118724895c42D159A2",
         paymasterAddress: "0x1184e555D2C56690cB27936357C5A0507Fb3a5d3",
         entryPointAddress: "0x953284cf7e8494563d79f4361895316690f68af5",
-        bundlerUrl: "https://bundler.ledgepay.io",
+        registrar: "0xb2eA6FeD6276185a5413Ae397E3d6881792B03aA",
+        bundlerUrl: "https://polygon.bundler.ledgepay.io",
         logoUrl: "/polygon.png",
         Chain: {
             id: 137,
@@ -25,9 +27,11 @@ const ClientConfigurations = [
         }
     },
     {
+        walletImplementation: "0xc363505A40493723F6019F5cb3B03C319115963F",
         paymasterAddress: "0x871dc4bFa243DB77c08D14d0c66a98d189e2f770",
         entryPointAddress: "0x9d74Dd4C532fdfBEc19Be8D1c31C2223001Aa816",
-        bundlerUrl: "https://bundler.ledgepay.io",
+        registrar: "0x8dDf16be6c8aD764cA2DA1FCc28F5ae83d023BCF",
+        bundlerUrl: "https://cronos.bundler.ledgepay.io",
         logoUrl: "/cronos.svg",
         Chain: {
             id: 338,
@@ -50,9 +54,11 @@ const ClientConfigurations = [
         }
     },
     {
+        walletImplementation: "0x8c06c9ad3c7f7dA8AFB02636a54970B4cCf490f1",
         paymasterAddress: "0x9d74Dd4C532fdfBEc19Be8D1c31C2223001Aa816",
         entryPointAddress: "0x20ed209B16EF395db0F0031A1bbf0F17CA5Aaca4",
-        bundlerUrl: "https://bundler.ledgepay.io",
+        registrar: "0xDe01c60e623961ccebb939cB29ACB737DD7D1bA0",
+        bundlerUrl: "https://optimism.bundler.ledgepay.io",
         logoUrl: "/optimism.png",
         Chain: {
             id: 10,
@@ -75,9 +81,11 @@ const ClientConfigurations = [
           }
     },
     {
+        walletImplementation: "0x7775695Ea68A2ef91bcB1B06434b8E454c17056f",
         paymasterAddress: "0x871dc4bFa243DB77c08D14d0c66a98d189e2f770",
         entryPointAddress: "0x9d74Dd4C532fdfBEc19Be8D1c31C2223001Aa816",
-        bundlerUrl: "https://bundler.ledgepay.io",
+        registrar: "0x929dd1291b512f16bc2f3827BD462E2a0d118115",
+        bundlerUrl: "https://sapphire.bundler.ledgepay.io",
         Chain: {
             id: 23295,
             name: 'Sapphire ParaTime Testnet',
