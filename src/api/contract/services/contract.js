@@ -68,7 +68,7 @@ module.exports = createCoreService('api::contract.contract', (strapi) => ({
             },
         });
 
-       const REG = await ethers.getContractFactory(FIFSRegistrarJson.abi, FIFSRegistrarJson.bytecode, wallet);
+       const REG = await ethers.getContractFactory(FIFSRegistrarJson.abi, FIFSRegistrarJson.bytecode, walletContract.address);
 
        const registrar = await REG.attach(config.registrar);
 
