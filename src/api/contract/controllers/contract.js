@@ -1,6 +1,6 @@
 'use strict';
 
-const { ClientConfigurations } = require('../../../../ClientConfigurations');
+const { ClientConfigurations } = require('../../../ClientConfigurations');
 const { ethers } = require('ethers');
 const shappire = require('@oasisprotocol/sapphire-paratime');
 /**
