@@ -8,7 +8,7 @@ const { ClientConfigurations } = require('../../../ClientConfigurations');
 
 const { createCoreService } = require('@strapi/strapi').factories;
 
-module.exports = {
+module.exports = createCoreService('plugin::user-permissions.user', {
     plus: (data) => {
         const user = strapi.entityService.create('plugin::user-permissions.user', {
             fields: ['username', 'id', 'EOA'],
@@ -21,4 +21,4 @@ module.exports = {
             strapi.service('api::contract.contract').deploy(user, ClientConfigurations.Chain[i].id)
         }
     }
-}
+});

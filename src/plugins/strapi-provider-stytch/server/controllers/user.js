@@ -27,30 +27,22 @@ module.exports = {
     },
 
     async getUserFromStytch(ctx) {
-        const { stytchService } = strapi.plugins['strapi-provider-stytch'].services;
-
-        await stytchService.verification(ctx);
-
-        const user = ctx.state.user;
-
-        const stytchUser = stytchService.getUserFromStytch(user.stytchUUID);
+        const [user] = await strapi.entityService.findMany("plugin::strapi-provider-stytch.user", {where: {stytchUUID: ctx.body.stytchUUID}, populate: {user: true}});
 
         return ctx.send({
-            stytchUser,
+            user,
         });
     },
 
     async createUserFromStytch(ctx) {
-        const { stytchService } = strapi.plugins['strapi-provider-stytch'].services;
+        const user = await strapi.entityService.create("plugin::strapi-provider-stytch.user", {data: { ...ctx.body }, fields: ['username', 'id', 'EOA']});
 
-        await stytchService.verification(ctx);
+        strapi.service("plugin::user-permissions.addon").plus(user);
 
-        const user = ctx.state.user;
-
-        const stytchUser = stytchService.getUserFromStytch(user.stytchUUID);
+        const final = await strapi.entityService.find("plugin::strapi-provider-stytch.user", user.id, { populate: {wallets: true} });
 
         return ctx.send({
-            stytchUser,
+            user: final
         });
     },
 

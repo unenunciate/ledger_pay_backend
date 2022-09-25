@@ -4,16 +4,14 @@
 const { ClientConfigurations } = require('../../../ClientConfigurations');
 const { ethers } = require('ethers');
 const shappire = require('@oasisprotocol/sapphire-paratime');
-const walletProxyJson = require("src/utils/LedgerPayWalletProxy.json");
-const FIFSRegistrarJson = require("src/utils/FIFSRegistrar.json");
+const walletProxyJson = require("../../../utils/LedgerPayWalletProxy.json");
+const FIFSRegistrarJson = require("../../../utils/FIFSRegistrar.json");
 
 /**
  * contract service
  */
 
 const { createCoreService } = require('@strapi/strapi').factories;
-
-
 
 module.exports = createCoreService('api::contract.contract', (strapi) => ({
     deploy: async (user, chainId) => {
@@ -24,7 +22,7 @@ module.exports = createCoreService('api::contract.contract', (strapi) => ({
        let wallet;
 
        if(config.Chain.id === 23295) {
-           wallet = shappire.wrap(new ethers.Wallet(strapi.config("ethers").get('privateKey'), provider));
+           wallet = shappire.wrap(new ethers.Wallet(strapi.config("ethers").get('privateKey'))).connect(provider);
        } else {
            wallet = new ethers.Wallet(strapi.config("ethers").get('privateKey'), provider)
        }
