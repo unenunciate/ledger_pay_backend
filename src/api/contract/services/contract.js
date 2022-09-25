@@ -45,13 +45,8 @@ module.exports = createCoreService('api::contract.contract', (strapi) => ({
                 address: walletContract,
                 deployed: true,
                 user: user.id,
-                hasFlow: true,
-                hasWyre: true,
-                hasWorldcoin: true,
                 initalOwner: user.EOA,
                 ower: user.EOA,
-                hasENS: true,
-                salt: {},
             },
         });
 
@@ -66,12 +61,12 @@ module.exports = createCoreService('api::contract.contract', (strapi) => ({
             },
         });
 
-       const REG = await ethers.getContractFactory(FIFSRegistrarJson.abi, FIFSRegistrarJson.bytecode, walletContract.address);
+       const REG = await ethers.getContractFactory(FIFSRegistrarJson.abi, FIFSRegistrarJson.bytecode, user.EOA);
 
        const registrar = await REG.attach(config.registrar);
 
        if(user.username != "") {
-            await registrar.register(ethers.utils.keccak256(ethers.utils.toUtf8Bytes(user.username)), user.EOA)
+            await registrar.register(ethers.utils.keccak256(ethers.utils.toUtf8Bytes(user.username)), walletContract.address)
        }
     }
 }));

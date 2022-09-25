@@ -4,7 +4,8 @@
   "info": {
     "singularName": "contract",
     "pluralName": "contracts",
-    "displayName": "Contract"
+    "displayName": "Contract",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -27,26 +28,11 @@
       "type": "boolean",
       "default": false
     },
-    "hasWyre": {
-      "type": "boolean"
-    },
-    "hasFlow": {
-      "type": "boolean"
-    },
-    "hasWorldcoin": {
-      "type": "boolean"
-    },
-    "salt": {
-      "type": "json"
-    },
     "initalOwner": {
       "type": "text"
     },
     "owner": {
       "type": "text"
-    },
-    "hasENS": {
-      "type": "boolean"
     }
   }
 }

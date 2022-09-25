@@ -77,11 +77,15 @@
       "type": "date"
     },
     "discoverable": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": true
     },
     "worldcoinSetup": {
       "type": "boolean",
       "default": false
+    },
+    "EOA": {
+      "type": "string"
     }
   }
 }
