@@ -20,6 +20,18 @@
       "configurable": false,
       "required": true
     },
+    "provider": {
+      "type": "string",
+      "configurable": false
+    },
+    "password": {
+      "type": "password",
+      "minLength": 6,
+      "required": true,
+      "default": "strapi1",
+      "configurable": false,
+      "private": true
+    },
     "confirmationToken": {
       "type": "string",
       "configurable": false,
