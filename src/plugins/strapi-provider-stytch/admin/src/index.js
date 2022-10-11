@@ -1,7 +1,7 @@
-import pluginPkg from '../../package.json';
-import pluginId from './utils/pluginId';
-import { prefixPluginTranslations } from '@strapi/helper-plugin';
-import pluginPermissions from './permissions';
+import pluginPkg from "../../package.json";
+import pluginId from "./utils/pluginId";
+import { prefixPluginTranslations } from "@strapi/helper-plugin";
+import pluginPermissions from "./permissions";
 import getTrad from "./utils/getTrad";
 
 const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
@@ -20,21 +20,21 @@ export default {
       {
         id: pluginId,
         intlLabel: {
-          id: getTrad('Header.Settings'),
-          defaultMessage: 'Stytch Login',
+          id: getTrad("Header.Settings"),
+          defaultMessage: "Stytch Login",
         },
       },
       [
         {
           intlLabel: {
-            id: getTrad('Form.title.Settings'),
-            defaultMessage: 'Settings',
+            id: getTrad("Form.title.Settings"),
+            defaultMessage: "Settings",
           },
-          id: 'stytch-settings',
+          id: "stytch-settings",
           to: `/settings/${pluginId}`,
           Component: async () => {
             return await import(
-              /* webpackChunkName: "password-settings-page" */ './pages/Settings'
+              /* webpackChunkName: "password-settings-page" */ "./pages/Settings"
             );
           },
           permissions: pluginPermissions.readSettings,
@@ -43,8 +43,7 @@ export default {
     );
     app.registerPlugin(plugin);
   },
-  bootstrap(app) {
-  },
+  bootstrap(app) {},
   async registerTrads({ locales }) {
     const importedTrads = await Promise.all(
       locales.map((locale) => {
@@ -63,8 +62,8 @@ export default {
               locale,
             };
           });
-      }),
+      })
     );
     return Promise.resolve(importedTrads);
-  }
+  },
 };

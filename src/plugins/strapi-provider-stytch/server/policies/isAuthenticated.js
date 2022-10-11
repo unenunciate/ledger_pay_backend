@@ -1,55 +1,54 @@
-'use strict';
+"use strict";
 
 const stytch = require("stytch");
 
 const client = new stytch.Client({
-  project_id: strapi.config.get('stytch.project_id'),
-  secret: strapi.config.get('stytch.secret_key'),
+  project_id: strapi.config.get("stytch.project_id"),
+  secret: strapi.config.get("stytch.secret_key"),
   env: stytch.envs.test,
 });
 
-
 module.exports = async (ctx, next) => {
-  const { stytchService } = strapi.plugins['strapi-provider-stytch'].services;
+  const { stytchService } = strapi.plugins["strapi-provider-stytch"].services;
   const isEnabled = await stytchService.isEnabled();
 
   if (!isEnabled) {
-    return ctx.badRequest('auth.disabled');
+    return ctx.badRequest("auth.disabled");
   }
 
   const { authorization } = ctx.request.header || null;
 
   if (!authorization) {
-    return ctx.badRequest('No authorization header.');
+    return ctx.badRequest("No authorization header.");
   }
 
   const session_token = authorization.substring(7);
 
   if (!session_token) {
-    return ctx.badRequest('No bearer token');
+    return ctx.badRequest("No bearer token");
   }
 
-
   try {
-    const { user } = await client.sessions.authenticate({ "session_token": session_token });
+    const { user } = await client.sessions.authenticate({
+      session_token: session_token,
+    });
 
     if (!user) {
-        return ctx.badRequest('No stytch user found for bearer token.');
+      return ctx.badRequest("No stytch user found for bearer token.");
     }
 
     const strapiUser = await stytchService.user({ stytchUUID: user.user_id });
 
     if (!strapiUser) {
-      strapi.log.debug("strapiUser not found")
-      return ctx.badRequest('No strapi user found for bearer token.');
+      strapi.log.debug("strapiUser not found");
+      return ctx.badRequest("No strapi user found for bearer token.");
     }
 
     ctx.state.user = strapiUser;
     ctx.cookies.set("session_token", session_token);
 
     await next();
-
   } catch (err) {
-    return ctx.badRequest('Token invalid.');
+    return ctx.badRequest("Token invalid.");
   }
 };

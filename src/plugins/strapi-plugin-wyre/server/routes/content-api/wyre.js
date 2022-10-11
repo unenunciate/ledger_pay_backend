@@ -100,7 +100,8 @@ module.exports = [
     method: "POST",
     path: "/add-bank",
     handler: "wyreController.addBankToProfile",
-    policies: ["plugin::strapi-provider-stytch.isAuthenticated"],
+    // policies: ["plugin::strapi-provider-stytch.isAuthenticated"],
+    policies: [],
     config: {
       description: "Add a bank account to wyre profile",
       tag: {

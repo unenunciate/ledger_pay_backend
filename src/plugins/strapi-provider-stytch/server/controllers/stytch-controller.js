@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * passwordless.js controller
@@ -8,49 +8,50 @@
 
 const _ = require("lodash");
 module.exports = {
+  /**
+   * Default action.
+   *
+   * @return {Object}
+   */
 
-    /**
-     * Default action.
-     *
-     * @return {Object}
-     */
+  index: async (ctx) => {
+    // Add your own logic here.
 
-    index: async (ctx) => {
-        // Add your own logic here.
+    // Send 200 `ok`
+    ctx.send({
+      message: "ok",
+    });
+  },
 
-        // Send 200 `ok`
-        ctx.send({
-            message: 'ok'
-        });
-    },
+  async getSettings(ctx) {
+    console.debug("TEST: ctx = ", ctx); // DEBUG:
 
-    async getSettings(ctx) {
-        ctx.send({
-            settings: await strapi
-                .store({
-                    environment: '',
-                    type: 'plugin',
-                    name: 'stytch',
-                    key: 'settings',
-                })
-                .get(),
-        });
-    },
+    ctx.send({
+      settings: await strapi
+        .store({
+          environment: "",
+          type: "plugin",
+          name: "stytch",
+          key: "settings",
+        })
+        .get(),
+    });
+  },
 
-    async updateSettings(ctx) {
-        if (_.isEmpty(ctx.request.body)) {
-            return ctx.badRequest(null, [{ messages: [{ id: 'Cannot be empty' }] }]);
-        }
+  async updateSettings(ctx) {
+    if (_.isEmpty(ctx.request.body)) {
+      return ctx.badRequest(null, [{ messages: [{ id: "Cannot be empty" }] }]);
+    }
 
-        await strapi
-            .store({
-                environment: '',
-                type: 'plugin',
-                name: 'stytch',
-                key: 'settings',
-            })
-            .set({ value: ctx.request.body });
+    await strapi
+      .store({
+        environment: "",
+        type: "plugin",
+        name: "stytch",
+        key: "settings",
+      })
+      .set({ value: ctx.request.body });
 
-        ctx.send({ ok: true });
-    },
+    ctx.send({ ok: true });
+  },
 };

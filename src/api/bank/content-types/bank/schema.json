@@ -8,16 +8,17 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false,
+    "comment": ""
   },
   "pluginOptions": {},
   "attributes": {
     "account": {
-      "type": "biginteger",
+      "type": "string",
       "private": true
     },
     "routing": {
-      "type": "biginteger"
+      "type": "string"
     },
     "profile": {
       "type": "relation",

@@ -30,23 +30,26 @@ const { copyFile } = require("fs");
 //         : stytch.envs.test,
 //   });
 // }
-// const client = new stytch.Client({
-//   project_id: strapi.config.get("stytch.project_id"),
-//   secret: strapi.config.get("stytch.secret_key"),
-//   env: stytch.envs.test,
-// });
+const client = new stytch.Client({
+  project_id: strapi.config.get("stytch.project_id"),
+  secret: strapi.config.get("stytch.secret_key"),
+  env: stytch.envs.test,
+});
 
 module.exports = ({ strapi }) => {
   return {
     async initialize() {},
 
-    settings() {
+    async settings() {
       const pluginStore = strapi.store({
         environment: "",
         type: "plugin",
         name: "strapi-provider-stytch",
       });
-      return pluginStore.get({ key: "settings" });
+      return await pluginStore.get({ key: "settings" });
+
+      // const settings = await pluginStore.get({ key: 'settings' });
+      // return settings;
     },
 
     userSettings() {
