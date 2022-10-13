@@ -62,16 +62,19 @@
     "email": {
       "type": "email",
       "minLength": 6,
-      "required": false
+      "required": true
     },
     "phone": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "firstName": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "lastName": {
-      "type": "string"
+      "type": "string",
+      "required": true
     },
     "wallets": {
       "type": "relation",

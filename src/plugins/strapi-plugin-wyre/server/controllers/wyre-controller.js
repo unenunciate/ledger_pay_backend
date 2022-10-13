@@ -16,8 +16,14 @@ module.exports = {
   async createPaymentOrder(ctx) {
     const { wyreService } = strapi.plugins["strapi-plugin-wyre"].services;
 
-    const user = ctx.state.user;
+    // const user = ctx.state.user;
     const paymentOrder = ctx.request.body;
+
+    // test
+    let user = { id: "2" };
+    strapi.log.debug("User ID is: ", user.id);
+    strapi.log.debug("paymentOrder is: ", paymentOrder);
+
     const wyreProfile = await strapi.db
       .query("plugin::strapi-plugin-wyre.wyre-profile")
       .findOne({
@@ -25,10 +31,10 @@ module.exports = {
         populate: true,
       });
 
-    console.log(wyreProfile);
+    strapi.log.debug(wyreProfile);
     const response = await wyreService.createOrder(paymentOrder, wyreProfile);
 
-    console.log(response);
+    strapi.log.debug(response);
     if (!response) {
       ctx.badRequest("wyre.error");
     }
@@ -50,13 +56,13 @@ module.exports = {
         populate: true,
       });
 
-    console.log(wyreProfile);
+    strapi.log.debug(wyreProfile);
     const response = await wyreService.createWithdraw(
       withdrawOrder,
       wyreProfile
     );
 
-    console.log(response);
+    strapi.log.debug(response);
     if (!response) {
       ctx.badRequest("no.bankAccount");
     }
@@ -91,7 +97,7 @@ module.exports = {
         data: debitCard,
       });
 
-    console.log(newDebitCard);
+    strapi.log.debug(newDebitCard);
     const wyreProfile = await strapi.db
       .query("plugin::strapi-plugin-wyre.wyre-profile")
       .update({
@@ -100,7 +106,7 @@ module.exports = {
         populate: ["debitCards"],
       });
 
-    console.log(wyreProfile);
+    strapi.log.debug(wyreProfile);
 
     return wyreProfile;
   },
@@ -116,7 +122,7 @@ module.exports = {
       data: bank,
     });
 
-    console.log(newBank);
+    strapi.log.debug(newBank);
     const wyreProfile = await strapi.db
       .query("plugin::strapi-plugin-wyre.wyre-profile")
       .update({
@@ -125,7 +131,7 @@ module.exports = {
         populate: ["banks"],
       });
 
-    console.log(wyreProfile);
+    strapi.log.debug(wyreProfile);
 
     return wyreProfile;
   },
@@ -145,7 +151,7 @@ module.exports = {
         data: address,
       });
 
-    console.log(newAddress);
+    strapi.log.debug(newAddress);
     const wyreProfile = await strapi.db
       .query("plugin::strapi-plugin-wyre.wyre-profile")
       .update({
@@ -154,7 +160,7 @@ module.exports = {
         populate: ["addresses"],
       });
 
-    console.log(wyreProfile);
+    strapi.log.debug(wyreProfile);
     return wyreProfile;
   },
 
@@ -169,7 +175,7 @@ module.exports = {
         data: address,
       });
 
-    console.log(newAddress);
+    strapi.log.debug(newAddress);
     const wyreProfile = await strapi.db
       .query("plugin::strapi-plugin-wyre.wyre-profile")
       .update({
@@ -178,7 +184,7 @@ module.exports = {
         populate: ["addresses"],
       });
 
-    console.log(wyreProfile);
+    strapi.log.debug(wyreProfile);
     return wyreProfile;
   },
 
